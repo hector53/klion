@@ -10,6 +10,12 @@ The project is designed for a single-user or small-team deployment and is still
 evolving. Review the authentication and deployment notes before using it with
 production data.
 
+## Live deployment
+
+Klion is actively used in production at [klion.hectoracosta.dev](https://klion.hectoracosta.dev/).
+The dashboard requires authentication; no demo credentials or production data are
+published in this repository.
+
 ## What it demonstrates
 
 - Product ownership across a NestJS API, Next.js dashboard, PostgreSQL and Docker.
