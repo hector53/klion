@@ -1,0 +1,72 @@
+services:
+  # PostgreSQL Database with pgvector extension for RAG
+  postgres:
+    image: pgvector/pgvector:pg15
+    container_name: klion-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-clientboard}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Backend API (NestJS)
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: klion-api
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      DATABASE_NAME: ${POSTGRES_DB:-clientboard}
+      NODE_ENV: production
+      PORT: 3001
+      JWT_SECRET: ${JWT_SECRET:-change-me}
+      # Service keys (name:key,...) for headless clients like Akela
+      SERVICE_API_KEYS: ${SERVICE_API_KEYS:-}
+      # AI API Keys for embeddings and chat
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      FRONTEND_URL: ${FRONTEND_URL:-https://your-klion-domain.example}
+    ports:
+      - "127.0.0.1:3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Frontend (Next.js)
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://your-klion-domain.example/api}
+    container_name: klion-web
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://your-klion-domain.example/api}
+      INTERNAL_API_URL: http://api:3001/api
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-change-me}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-https://your-klion-domain.example}
+      FILES_API_BASE_URL: ${FILES_API_BASE_URL:-}
+      FILES_API_KEY: ${FILES_API_KEY:-}
+      FILES_DEFAULT_PROJECT: ${FILES_DEFAULT_PROJECT:-klion}
+    ports:
+      - "127.0.0.1:3500:3500"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

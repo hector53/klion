@@ -1,0 +1,100 @@
+# =============================================================================
+# 🦁 Klion - Template de Variables de Entorno
+# =============================================================================
+# Copia este archivo a .env y completa los valores
+# Comando: cp env-template .env
+# =============================================================================
+
+# =============================================================================
+# 🗄️ DATABASE CONFIGURATION
+# =============================================================================
+# Configuración de PostgreSQL
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+DATABASE_NAME=clientboard
+
+# =============================================================================
+# 🔐 AUTHENTICATION & SECURITY
+# =============================================================================
+# First user created when the database is empty
+MASTER_USER_EMAIL=demo@klion.local
+MASTER_USER_PASSWORD=
+MASTER_USER_NAME=Demo User
+
+# JWT Secret para el backend
+# Genera uno nuevo con: openssl rand -base64 32
+JWT_SECRET=generate-a-unique-jwt-secret
+
+# NextAuth Secret para el frontend
+# Genera uno nuevo con: openssl rand -base64 32
+NEXTAUTH_SECRET=generate-a-unique-nextauth-secret
+
+# NextAuth URL (debe coincidir con el puerto del frontend)
+NEXTAUTH_URL=http://localhost:3500
+
+# Service keys para clientes headless (ej. Akela) que llaman a la API sin
+# sesión de navegador. Formato: nombre:key separados por comas.
+# Se envían en el header X-Service-Key y resuelven al usuario único del sistema.
+# Genera una key con: openssl rand -hex 32
+# Déjalo vacío si no usas clientes headless.
+SERVICE_API_KEYS=
+
+# =============================================================================
+# 🤖 AI SERVICES
+# =============================================================================
+# OpenAI API Key
+# Obtén tu key en: https://platform.openai.com/api-keys
+# Usado para: Resumen de cliente, Plan del día, Redacción de mensajes, Git commits
+OPENAI_API_KEY=
+
+# Gemini API Key
+# Obtén tu key en: https://aistudio.google.com/app/apikey
+# Usado para: Chat IA, análisis de notas de proyecto, Embeddings para RAG
+GEMINI_API_KEY=
+
+# Gemini model por defecto (opcional). Se usa cuando el usuario no eligió
+# un modelo en Settings > IA. Ver enum GeminiModel en ai-settings.entity.ts
+# para los valores válidos (ej. gemini-2.5-flash, gemini-2.5-pro).
+GEMINI_MODEL=gemini-2.5-flash
+
+# =============================================================================
+# 🌐 API URLS & PORTS
+# =============================================================================
+# Puerto del backend
+PORT=3001
+
+# URL del frontend para CORS (múltiples URLs separadas por coma)
+FRONTEND_URL=http://localhost:3000,http://localhost:3500,http://localhost:3002
+
+# URL pública de la API para el frontend (cliente/navegador)
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+
+# URL interna de la API para servidor-a-servidor (Docker)
+# Usa "http://api:3001/api" si usas Docker Compose
+INTERNAL_API_URL=http://localhost:3001/api
+
+# =============================================================================
+# 🔧 ENVIRONMENT
+# =============================================================================
+# Entorno de ejecución (development, production)
+NODE_ENV=development
+
+# =============================================================================
+# 📸 FEATURES & SETTINGS
+# =============================================================================
+# Días de retención de snapshots (por defecto: 90)
+SNAPSHOT_RETENTION_DAYS=90
+
+# Habilitar RAG por defecto en nuevos proyectos (true/false)
+DEFAULT_RAG_ENABLED=true
+
+# =============================================================================
+# 📝 NOTAS
+# =============================================================================
+# - Las API keys son opcionales pero limitan funcionalidades si no están presentes
+# - Los secretos JWT y NextAuth deben ser diferentes en producción
+# - Nunca compartas este archivo con valores reales en repositorios públicos
+# - Para producción, usa variables de entorno del sistema o servicios de secrets
+# =============================================================================

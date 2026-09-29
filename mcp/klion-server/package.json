@@ -1,0 +1,47 @@
+{
+  "name": "@klion/mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Klion - AI agents can create tasks, manage clients and projects",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "klion": "./dist/cli.js",
+    "klion-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "cli": "tsx src/cli.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "klion",
+    "kanban",
+    "tasks",
+    "ai",
+    "copilot",
+    "claude"
+  ],
+  "author": "Klion Team",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "axios": "^1.6.0",
+    "commander": "^12.0.0",
+    "conf": "^12.0.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.0",
+    "inquirer": "^9.2.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
