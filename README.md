@@ -16,6 +16,25 @@ Klion is actively used in production at [klion.hectoracosta.dev](https://klion.h
 The dashboard requires authentication; no demo credentials or production data are
 published in this repository.
 
+## Product screenshots
+
+These screenshots show the main product surfaces using sanitized demonstration data.
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/board.webp" alt="Klion board" width="420"></td>
+    <td><img src="docs/screenshots/projects.webp" alt="Klion projects" width="420"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/knowledge.webp" alt="Klion knowledge base" width="420"></td>
+    <td><img src="docs/screenshots/context-rag.webp" alt="Klion project context and RAG" width="420"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/task-list.webp" alt="Klion filtered task list" width="420"></td>
+    <td></td>
+  </tr>
+</table>
+
 ## What it demonstrates
 
 - Product ownership across a NestJS API, Next.js dashboard, PostgreSQL and Docker.
