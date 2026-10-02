@@ -6,6 +6,22 @@ Todos los cambios notables de este proyecto se documentan en este archivo, sigui
 >
 > Este archivo fusiona los changelogs que antes vivían dispersos en `CHANGELOG_v1.2.0.md`, `CHANGELOG_v2.0.0.md`, `docs/CHANGELOG.md` y `docs/CHANGELOG_v1.1.0.md`. Las versiones originales, con mayor detalle de archivos tocados, quedaron archivadas en `docs/archive/changelogs/`. El changelog propio del servidor MCP (`mcp/klion-server/CHANGELOG_v2.0.md`) se mantiene aparte porque documenta herramientas, no el producto.
 
+## [0.9.5] - 2026-10-02
+
+### Fixed
+- **Backend: MCP server con dependencias de producción vulnerables**:
+  - `npm audit --omit=dev` en `mcp/klion-server` reportaba 11 vulnerabilidades (7 high, 3 moderate, 1 low), todas vía `@modelcontextprotocol/sdk` 1.25.2 (hono, @hono/node-server, path-to-regexp, body-parser, qs, fast-uri, ajv) y `axios` 1.13.2 (form-data, follow-redirects).
+  - Se actualiza `@modelcontextprotocol/sdk` a `^1.32.0` (última v1, sin migrar a v2) y `axios` a `^1.20.0`; `ajv` y `fast-uri` se suben dentro de su rango semver con `npm update`. Sin `npm audit fix --force`, sin cambios de arquitectura ni de transporte (sigue siendo stdio).
+  - `npm audit --omit=dev` queda en 0 vulnerabilidades.
+  - Files: `mcp/klion-server/package.json`, `mcp/klion-server/package-lock.json`.
+
+### Added
+- **Backend: annotations MCP explícitos en las 36 tools**:
+  - Cada tool declara `readOnlyHint`, `destructiveHint`, `idempotentHint` y `openWorldHint`, asignados revisando el handler y el servicio del backend de cada una, no por el nombre.
+  - Casos no obvios: `delete_task`/`delete_knowledge` hacen hard delete; los `update_*` son destructivos porque reemplazan valores (tags, rules y content completos); `git_commit` se marca destructivo y open-world por el `add -A` y el `push` opcional; las tools que llaman a OpenAI (`generate_*`, `parse_conversation`) son open-world; `get_knowledge` no es read-only ni idempotente porque incrementa `usageCount`/`lastAccessedAt` en cada llamada; `get_context` no es read-only porque crea el `ProjectContext` vacío si no existe, pero sí idempotente (`project_id` es único y sólo se crea una vez).
+  - Nuevo test `npm test` (node:test, sin dependencias nuevas) que levanta el servidor por stdio y verifica que `tools/list` devuelve las 36 tools, que todas declaran los cuatro hints como booleanos y algunos valores representativos.
+  - Files: `mcp/klion-server/src/index.ts`, `mcp/klion-server/test/tool-annotations.test.mjs` (nuevo), `mcp/klion-server/package.json`.
+
 ## [0.9.4] - 2026-09-21
 
 ### Fixed

@@ -54,6 +54,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Task tools
       {
         name: "create_task",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: false,
+          openWorldHint: false,
+        },
         description:
           "Create a new task in Klion. Requires a clientId and title. The task will be added to the Kanban board.",
         inputSchema: {
@@ -106,6 +112,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "update_task",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Partially update an existing task in Klion. Only send the fields you want to change — omitted fields keep their current value.",
         inputSchema: {
@@ -167,6 +179,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "delete_task",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description: "Delete a task from Klion",
         inputSchema: {
           type: "object",
@@ -181,6 +199,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "move_task",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Move a task to a different status column on the Kanban board",
         inputSchema: {
@@ -205,6 +229,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "list_tasks",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "List tasks with optional filters (client, project, status, priority, creation date range) and real pagination. Defaults to a high limit (100) instead of the API's default of 10, so a single call can cover a whole project.",
         inputSchema: {
@@ -251,6 +281,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_task",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description: "Get details of a specific task",
         inputSchema: {
           type: "object",
@@ -265,6 +301,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_board",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Get the Kanban board with tasks grouped by status (todo, doing, blocked, done). " +
           "The 'done' column is capped at the most recently completed tasks (default 50) " +
@@ -292,6 +334,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Space tools (Akela)
       {
         name: "list_spaces",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "List all spaces for the user. Spaces separate different contexts (Personal, Work). Use this to organize tasks and projects by life context.",
         inputSchema: {
@@ -306,6 +354,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_space",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Get details of a specific space including its clients and projects",
         inputSchema: {
@@ -321,6 +375,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "create_space",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: false,
+          openWorldHint: false,
+        },
         description:
           "Create a new space. Use type 'personal' for personal life (auto, health, home) or 'work' for professional contexts (clients, projects).",
         inputSchema: {
@@ -351,6 +411,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "update_space",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Partially update an existing space's name, type, icon, color, or archive status. Only send the fields you want to change — omitted fields keep their current value.",
         inputSchema: {
@@ -391,6 +457,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_space_stats",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Get statistics for a space including project count, client count, and task counts by status",
         inputSchema: {
@@ -407,6 +479,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Client tools
       {
         name: "list_clients",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "List all clients. Use this to get client IDs for creating tasks. Clients belong to 'work' type spaces.",
         inputSchema: {
@@ -425,6 +503,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_client",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description: "Get details of a specific client",
         inputSchema: {
           type: "object",
@@ -440,6 +524,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Project tools
       {
         name: "list_projects",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description: "List all projects, optionally filtered by client",
         inputSchema: {
           type: "object",
@@ -453,6 +543,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_project",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description: "Get details of a specific project",
         inputSchema: {
           type: "object",
@@ -467,6 +563,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_context",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Get full project context for AI assistants. Returns comprehensive information including: " +
           "project details, client info, technical stack, development rules, current tasks, blocked items, " +
@@ -486,6 +588,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "update_context",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Update project context settings. Use this to configure the project's technical stack, " +
           "development rules, repository info, and other AI-relevant settings.",
@@ -539,6 +647,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Auth tools
       {
         name: "check_auth",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Check if the user is authenticated and get current user info",
         inputSchema: {
@@ -549,6 +663,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Knowledge tools
       {
         name: "create_knowledge",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: false,
+          openWorldHint: false,
+        },
         description:
           "Create a new knowledge entry in Klion. Use this to save reusable code snippets, " +
           "architectural decisions, workflow patterns, solutions to common problems, and references. " +
@@ -621,6 +741,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "search_knowledge",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Search Klion's own knowledge base of previously saved decisions, patterns, snippets, and solutions. " +
           "Call this BEFORE debugging an error from scratch or proposing a new architecture/design decision — " +
@@ -668,6 +794,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "get_knowledge",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: false,
+          openWorldHint: false,
+        },
         description: "Get the full details of a specific knowledge entry by ID",
         inputSchema: {
           type: "object",
@@ -682,6 +814,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "list_knowledge",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "List all knowledge entries with optional filters. Use this to browse available knowledge.",
         inputSchema: {
@@ -725,6 +863,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "update_knowledge",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Partially update an existing knowledge entry. Only send the fields you want to change — omitted fields keep their current value.",
         inputSchema: {
@@ -803,6 +947,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "delete_knowledge",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description: "Permanently delete a knowledge entry",
         inputSchema: {
           type: "object",
@@ -818,6 +968,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Git tools
       {
         name: "git_status",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Get the current status of a project's git repository. Shows branch, staged/modified/untracked files, " +
           "and ahead/behind status relative to upstream.",
@@ -834,6 +990,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "git_branches",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description: "List all branches in the project's repository",
         inputSchema: {
           type: "object",
@@ -848,6 +1010,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "git_diff",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Get the diff of staged or unstaged changes in the repository. Large diffs are truncated to the first 300 lines " +
           "(with a note showing how many lines were omitted) — stage/commit selectively if you need to see the rest.",
@@ -869,6 +1037,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "generate_commit_message",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: true,
+        },
         description:
           "Generate a commit message using AI based on the current changes. " +
           "Returns a conventional commit message with type, optional scope, and description.",
@@ -908,6 +1082,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "git_commit",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: false,
+          openWorldHint: true,
+        },
         description:
           "Create a git commit with the specified message. Can optionally stage specific files and push after committing.",
         inputSchema: {
@@ -939,6 +1119,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "generate_changelog",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: true,
+        },
         description:
           "Generate a changelog from git commits using AI. Groups commits by type (features, fixes, etc).",
         inputSchema: {
@@ -967,6 +1153,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "update_changelog",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: false,
+          openWorldHint: false,
+        },
         description: "Update the CHANGELOG.md file with new content",
         inputSchema: {
           type: "object",
@@ -990,6 +1182,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "generate_documentation",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: true,
+        },
         description:
           "Generate documentation files using AI (README, API docs, setup guide, or contributing guide)",
         inputSchema: {
@@ -1015,6 +1213,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "save_documentation",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: true,
+          idempotentHint: true,
+          openWorldHint: false,
+        },
         description:
           "Save generated documentation to a file, optionally committing it",
         inputSchema: {
@@ -1051,6 +1255,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       // Conversation Parser tools
       {
         name: "parse_conversation",
+        annotations: {
+          readOnlyHint: true,
+          destructiveHint: false,
+          idempotentHint: true,
+          openWorldHint: true,
+        },
         description:
           "Parse a conversation (from Slack, WhatsApp, email, etc.) and extract potential tasks, " +
           "decisions, and pending questions. Perfect for turning meeting notes or chat discussions into actionable tasks.",
@@ -1080,6 +1290,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       },
       {
         name: "create_tasks_from_conversation",
+        annotations: {
+          readOnlyHint: false,
+          destructiveHint: false,
+          idempotentHint: false,
+          openWorldHint: false,
+        },
         description:
           "Create tasks from the results of parse_conversation. Pass the extracted tasks to create them in Klion.",
         inputSchema: {
