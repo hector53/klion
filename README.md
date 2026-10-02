@@ -110,4 +110,6 @@ npm run build
 
 MIT. See [LICENSE](LICENSE).
 
+Security audit status is continuously monitored through M8ven Live.
+
 [![M8ven Verified](https://m8ven.ai/badge/mcp/hector53/klion?variant=verified)](https://m8ven.ai/mcp/hector53/klion?s=readme)
